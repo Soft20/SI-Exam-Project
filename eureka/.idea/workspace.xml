@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="discover:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="68072aed-2954-4bbd-88cd-a6a5f043059c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/discover_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1lFDU8VnFS3Yx7RU4b8Ukd8A7CF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+  </component>
+  <component name="RunManager">
+    <configuration name="DiscoverApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="discover" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="dk.dd.discover.DiscoverApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="68072aed-2954-4bbd-88cd-a6a5f043059c" name="Default Changelist" comment="" />
+      <created>1607183958744</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607183958744</updated>
+      <workItem from="1607183963232" duration="2398000" />
+      <workItem from="1607245990076" duration="1183000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="424" y="203" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607209429840">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="424" y="203" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607209429840" />
+    <state x="698" y="334" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1607208930755">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="698" y="334" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607208930755" />
+    <state width="1238" height="211" key="GridCell.Tab.0.bottom" timestamp="1607248169444">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="211" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1607248169444" />
+    <state width="1878" height="304" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607211177807" />
+    <state width="1878" height="304" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1920.23.1920.1057@0.0.1920.1080" timestamp="1607185293834" />
+    <state width="1238" height="211" key="GridCell.Tab.0.center" timestamp="1607248169442">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="211" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1607248169442" />
+    <state width="1878" height="304" key="GridCell.Tab.0.center/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607211177805" />
+    <state width="1878" height="304" key="GridCell.Tab.0.center/0.0.1920.1080/-1920.23.1920.1057@0.0.1920.1080" timestamp="1607185293829" />
+    <state width="1238" height="211" key="GridCell.Tab.0.left" timestamp="1607248169441">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="211" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1607248169441" />
+    <state width="1878" height="304" key="GridCell.Tab.0.left/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607211177804" />
+    <state width="1878" height="304" key="GridCell.Tab.0.left/0.0.1920.1080/-1920.23.1920.1057@0.0.1920.1080" timestamp="1607185293827" />
+    <state width="1238" height="211" key="GridCell.Tab.0.right" timestamp="1607248169443">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="211" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1607248169443" />
+    <state width="1878" height="304" key="GridCell.Tab.0.right/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607211177806" />
+    <state width="1878" height="304" key="GridCell.Tab.0.right/0.0.1920.1080/-1920.23.1920.1057@0.0.1920.1080" timestamp="1607185293831" />
+    <state width="1238" height="211" key="GridCell.Tab.1.bottom" timestamp="1607248169447">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="211" key="GridCell.Tab.1.bottom/0.0.1280.800@0.0.1280.800" timestamp="1607248169447" />
+    <state width="1878" height="304" key="GridCell.Tab.1.bottom/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607211177809" />
+    <state width="1878" height="304" key="GridCell.Tab.1.bottom/0.0.1920.1080/-1920.23.1920.1057@0.0.1920.1080" timestamp="1607185293844" />
+    <state width="1238" height="211" key="GridCell.Tab.1.center" timestamp="1607248169445">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="211" key="GridCell.Tab.1.center/0.0.1280.800@0.0.1280.800" timestamp="1607248169445" />
+    <state width="1878" height="304" key="GridCell.Tab.1.center/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607211177808" />
+    <state width="1878" height="304" key="GridCell.Tab.1.center/0.0.1920.1080/-1920.23.1920.1057@0.0.1920.1080" timestamp="1607185293837" />
+    <state width="1238" height="211" key="GridCell.Tab.1.left" timestamp="1607248169445">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="211" key="GridCell.Tab.1.left/0.0.1280.800@0.0.1280.800" timestamp="1607248169445" />
+    <state width="1878" height="304" key="GridCell.Tab.1.left/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607211177807" />
+    <state width="1878" height="304" key="GridCell.Tab.1.left/0.0.1920.1080/-1920.23.1920.1057@0.0.1920.1080" timestamp="1607185293836" />
+    <state width="1238" height="211" key="GridCell.Tab.1.right" timestamp="1607248169446">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="211" key="GridCell.Tab.1.right/0.0.1280.800@0.0.1280.800" timestamp="1607248169446" />
+    <state width="1878" height="304" key="GridCell.Tab.1.right/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607211177809" />
+    <state width="1878" height="304" key="GridCell.Tab.1.right/0.0.1920.1080/-1920.23.1920.1057@0.0.1920.1080" timestamp="1607185293840" />
+    <state x="448" y="123" key="SettingsEditor" timestamp="1607209564607">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="448" y="123" key="SettingsEditor/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1607209564607" />
+  </component>
+</project>
