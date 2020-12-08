@@ -2,10 +2,14 @@
 While solving the task, you must consider the following mandatory requirements and limitations:
 
 ## To Dora
-- [ ] A monolithic or legacy object-oriented application (https://exchangeratesapi.io/)
-- [ ] enterprise messaging
-- [ ] event streaming
-- [ ] evaluate figma diagram
+- [x] A monolithic or legacy object-oriented application (https://exchangeratesapi.io/)
+- [x] enterprise messaging
+- [x] event streaming
+
+---
+
+- Web-service - https://exchangeratesapi.io/
+- A monolithic or legacy system - web-scraper of existing website(message broker/ rabbitMQ)
 
 ## TBD
 - [ ] A monolithic or legacy object-oriented application
