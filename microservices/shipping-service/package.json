@@ -1,8 +1,8 @@
 {
-	"name": "express-service",
+	"name": "shipping-service",
 	"version": "1.0.0",
 	"main": "src/index.ts",
-	"repository": "https://github.com/Fraqs/microservice-system.express-service",
+	"repository": "https://github.com/Fraqs/microservice-system.shipping-service",
 	"author": "Stephan-MDD <stephan.mdd@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
