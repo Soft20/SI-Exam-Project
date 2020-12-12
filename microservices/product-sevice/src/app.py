@@ -1,13 +1,12 @@
 # libraries
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from dotenv import load_dotenv
 import os
 
 # components
 # import eureka
-from db_connect import mongo_client
-from product import add_product, handle_product
-from warehouse import add_warehouse, handle_warehouse
+from product import get_product, update_product, add_product, delete_product, get_all_products, get_products_in_warehouse, get_product_from_warehouse
+from warehouse import get_warehouse, update_warehouse, add_warehouse, delete_warehouse, get_all_warehouses
 
 load_dotenv(verbose=True)
 
@@ -22,24 +21,59 @@ def index_route():
     return jsonify({"warehouse": "/warehouse", "product": "/warehouse"})
 
 
-@app.route('/product/<id>', methods=['GET', 'PUT', 'DELETE'])
-def product_handler(id):
-    return handle_product(id)
+@app.route('/product', methods=['GET', 'PUT', 'POST', 'DELETE'])
+def product_handler():
+    id = request.args.get('id')
+
+    if request.method == 'GET':
+
+        if all(elem in ['warehouse_id', 'product_id'] for elem in request.args.keys()):
+            product_id = request.args.get('product_id')
+            warehouse_id = request.args.get('warehouse_id')
+            return get_product_from_warehouse(product_id, warehouse_id)
+
+        elif all(elem in ['warehouse_id'] for elem in request.args.keys()):
+            warehouse_id = request.args.get('warehouse_id')
+            return get_products_in_warehouse(warehouse_id)
+
+        else:
+            return get_product(id)
+
+    if request.method == 'PUT':
+        return update_product(id)
+
+    if request.method == 'POST':
+        return add_product()
+
+    if request.method == 'DELETE':
+        return delete_product(id)
 
 
-@app.route('/product', methods=['POST'])
-def add_product_handler():
-    return add_product()
+@app.route('/product/all', methods=['GET'])
+def all_products_handler():
+    return get_all_products()
 
 
-@app.route('/warehouse/<id>', methods=['GET', 'PUT', 'DELETE'])
-def warehouse_handler(id):
-    return handle_warehouse(id)
+@app.route('/warehouse', methods=['GET', 'PUT', 'POST', 'DELETE'])
+def warehouse_handler():
+    id = request.args.get('id')
+
+    if request.method == 'GET':
+        return get_warehouse(id)
+
+    if request.method == 'PUT':
+        return update_warehouse(id)
+
+    if request.method == 'POST':
+        return add_warehouse()
+
+    if request.method == 'DELETE':
+        return delete_warehouse(id)
 
 
-@app.route('/warehouse', methods=['POST'])
-def add_warehouse_handler():
-    return add_warehouse()
+@app.route('/warehouse/all', methods=['GET'])
+def all_warehouses_handler():
+    return get_all_warehouses()
 
 
 if __name__ == '__main__':
