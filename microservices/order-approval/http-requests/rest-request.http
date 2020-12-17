@@ -8,11 +8,11 @@ Content-Type: application/json
             "type":"string"
         },
         "customer": {
-            "value":"p@mail.com",
+            "value":"dora@mail.com",
             "type":"string"
         },
 		"price": {
-			"value":3000,
+			"value":2000,
 			"type":"long"
 		}
 	}
