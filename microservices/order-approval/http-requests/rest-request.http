@@ -1,0 +1,19 @@
+POST http://localhost:8080/engine-rest/process-definition/key/order-approval/start
+Content-Type: application/json
+
+{
+	"variables": {
+        "orderId": {
+            "value":"@£@$€aækshdlahd",
+            "type":"string"
+        },
+        "customer": {
+            "value":"p@mail.com",
+            "type":"string"
+        },
+		"price": {
+			"value":3000,
+			"type":"long"
+		}
+	}
+}
