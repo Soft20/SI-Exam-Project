@@ -5,10 +5,6 @@ from db_connect import database, mongo_client
 products = database["products"]
 warehouses = database["warehouses"]
 
-'''
-slet product skal også ske i warehouse
-'''
-
 
 def get_all_products():
     products_list = products.find()
@@ -92,15 +88,15 @@ def update_product(id):
         return 'Product not found', 404
 
 
-def delete_product(id):  # ATT:: does not delete reference in warhouse
-    '''
-    warehouses.update({}, {'$pull': {'products': {'$elemMatch': {'id': id}}}}, upsert=True)
-    products.delete_one({"_id": ObjectId(id)})
-    return jsonify({'message': 'product deleted successfully'}), 200
-    '''
+def delete_product(id):
+
     try:
         products.delete_one({"_id": ObjectId(id)})
-        # warehouses.update({}, {'$pull': {'products': {'$elemMatch': {id: ObjectId(id)}}}}, {'multi': True})
+        warehouse_list = warehouses.find()
+
+        for warehouse in warehouse_list:
+            warehouses.update_one({'_id': warehouse['_id'], "products.id": ObjectId(id)}, {'$set': {"products.$.amount":  0}})
+
         return jsonify({'message': 'product deleted successfully'}), 200
     except:
         return 'Product not found', 404
@@ -128,17 +124,4 @@ def add_product():
 
         return f'Product created successfully with id: {product.inserted_id}', 201
     except:
-        return 'Product not creates', 400
-
-
-''' Product POST Example
-{
-	"name": "product 10",
-	"price": 84,
-	"weight": 32,
-	"warehouse_inventory": [
-		{ "id": "5fd4d30027fd173076f63e92", "amount": 3 },
-		{ "id": "5fd4ced2306c9625bebebc93", "amount": 51 }
-	]
-}
-'''
+        return 'Product not created', 400
