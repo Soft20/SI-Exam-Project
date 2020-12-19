@@ -35,10 +35,11 @@ router.post({ name: 'createOrder', path: '' }, async (req, res) => {
             headers: { 'Content-Type': 'application/json' }
         })
         let shippingPrices: string = await response.json()
-
         let shippingWeight: number = weight >= 50 ? weight : 50
 
-        console.log(`The order will have a shipping price of ${shippingPrices[String(shippingWeight)]}`);
+        let shippingPrice: number = shippingPrices[String(shippingWeight)];
+
+        console.log(`The order will have a shipping price of ${shippingPrice}`);
 
         // TODO make order with product ids, shipping_price and amount?
         const order: any = {
@@ -47,7 +48,7 @@ router.post({ name: 'createOrder', path: '' }, async (req, res) => {
             confirmed: false,
             email: "dora@mail.com",
             price: 84,
-            shipping_price: 30,
+            shipping_price: shippingPrice,
             product_id: "5fd4f2a8b6375cb8482e6ad0",
             weight: 150
         }
@@ -71,7 +72,8 @@ router.post({ name: 'createOrder', path: '' }, async (req, res) => {
         console.log(`Camunda responded with ${response.status}`);
 
         const result: any = {
-            order: hypermedia("getOrder", { "id": order._id })
+            ...order,
+            link: hypermedia("getOrder", { "id": order._id })
         }
 
         res.send(result)
