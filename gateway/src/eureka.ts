@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { Eureka } from 'eureka-js-client';
+import { Eureka, EurekaClient } from 'eureka-js-client';
 import EnvError from './errors/EnvError';
 dotenv.config();
 
@@ -27,4 +27,13 @@ const client: Eureka = new Eureka({
 	eureka: { host: EUREKA_HOST, port: EUREKA_PORT, servicePath: '/eureka/apps/' },
 });
 
+client.start();
+
 export default client;
+
+export async function serviceURL(serverId:string) : Promise<string> {
+	const expressServer = await client.getInstancesByAppId(serverId)[0];
+	const EXPRESS_SERVICE_HOST = expressServer.hostName;
+	const EXPRESS_SERVICE_PORT = expressServer.port['$'];
+	return `http://${EXPRESS_SERVICE_HOST}:${EXPRESS_SERVICE_PORT}`
+}

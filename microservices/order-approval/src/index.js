@@ -2,8 +2,13 @@ const express = require('express');
 const fetch = require('node-fetch');
 const EurekaClient = require('./eureka')
 require('./camunda');
+const dotenv = require('dotenv')
 
-const PORT = 3000;
+dotenv.config();
+
+const PORT = Number(process.env.PORT);
+if (PORT == undefined) throw new EnvError('PORT');
+
 const CAMUNDA_HOST = 'http://localhost:8080/engine-rest/process-definition/key/order-approval/start';
 
 const app = express();

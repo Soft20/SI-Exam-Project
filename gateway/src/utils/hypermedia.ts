@@ -1,10 +1,8 @@
 import server from '../server';
 
-// ATT:: to .evn
-const host: string = 'http://localhost:8080';
+const host: string = `http://localhost:${process.env.PORT}`;
 
-export function hypermedia(path: string, params: object = {}, methods: string[] = ['GET']): object | string {
-	// const media: any = { methods, ref: host + server.router.render(path, params) };
-	const media: string = host + server.router.render(path, params);
+export default function hypermedia(path: string, params: object = {}, query:object = {}): object | string {
+	const media: string = host + server.router.render(path, params, query);
 	return media;
 }
