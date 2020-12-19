@@ -48,14 +48,27 @@ router.get({ name: 'getOrder', path: '' }, async (req, res) => {
 router.post({ name: 'createOrder', path: '' }, async (req, res) => {
 	try {
 		const { product_id, amount, email } = req.body;
+
+		if (!product_id || !amount || !email) {
+			throw new ServiceError("Please define all fields in body: 'product_id', 'amount' and 'email'", 400);
+		}
+
 		const { currency } = req.query;
-		res.setHeader('conversionCurrency', currency);
+		if (currency) {
+			res.setHeader('conversionCurrency', currency);
+		}
+
 		res.setHeader('baseCurrency', BASE_CURRENCY);
 
 		// ---------------PRODUCT SERVICE (GET PRODUCT WEIGHT & PRICE)-----------------------
 		const PRODUCT_SERVICE_URL = await serviceURL(PRODUCT_SERVICE);
 		let productResponse = await fetch(`${PRODUCT_SERVICE_URL}/product?id=${product_id}`);
+
 		let product = await productResponse.json();
+
+		if (productResponse.status > 300) {
+			throw new ServiceError(product.message, productResponse.status);
+		}
 
 		let { weight, price } = product;
 		const total_weight: number = amount * weight;
@@ -64,12 +77,16 @@ router.post({ name: 'createOrder', path: '' }, async (req, res) => {
 		const SHIPPING_SERVICE_URL: string = await serviceURL(SHIPPING_SERVICE);
 		let response: Response = await fetch(`${SHIPPING_SERVICE_URL}?weights=${total_weight}`);
 
+		if (response.status > 300) {
+			let body = await response.json();
+			throw new ServiceError(body.message, response.status);
+		}
+
 		let shippingPrices: string = await response.json();
+
 		let shippingWeight: number = total_weight >= 50 ? total_weight : 50;
 		let shippingPrice: number = shippingPrices[String(shippingWeight)];
-
 		const totalPrice: number = amount * price + shippingPrice;
-		console.log(`The order will have a shipping price of ${shippingPrice}`);
 
 		// ---------------PRODUCT SERVICE (PLACE ORDER)-----------------------
 		const orderBody: any = { email, product_id, amount, shipping_price: shippingPrice };
@@ -80,16 +97,26 @@ router.post({ name: 'createOrder', path: '' }, async (req, res) => {
 			body: JSON.stringify(orderBody),
 		});
 
+		if (orderResponse.status > 300) {
+			let body = await orderResponse.json();
+			throw new ServiceError(body.message, orderResponse.status);
+		}
+
 		const order = await orderResponse.json();
 
 		// ---------------ORDER APPROVAL SERVICE-----------------------
 		const ORDER_APPROVAL_URL = await serviceURL(ORDER_APPROVAL);
 
-		await fetch(`${ORDER_APPROVAL_URL}/purchase`, {
+		const approvalResponse = await fetch(`${ORDER_APPROVAL_URL}/purchase`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ orderId: order._id, email, price: totalPrice, shippingPrice }),
 		});
+
+		if (approvalResponse.status > 300) {
+			let body = await approvalResponse.json();
+			throw new ServiceError(body.message, approvalResponse.status);
+		}
 
 		// ---------------OPTIONAL CURRENCY CONVERSION-----------------------
 		const convertedTotalPrice = await convertCurrency(totalPrice, BASE_CURRENCY, currency);

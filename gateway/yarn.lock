@@ -1279,7 +1279,7 @@ setprototypeof@1.1.1:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
 
-source-map-support@^0.5.17:
+source-map-support@^0.5.17, source-map-support@^0.5.19:
   version "0.5.19"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
   integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
@@ -1395,6 +1395,13 @@ ts-node@^9.1.0:
     make-error "^1.1.1"
     source-map-support "^0.5.17"
     yn "3.1.1"
+
+tslog@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/tslog/-/tslog-3.0.2.tgz#f7054ad2221f134034e58f5fbc05e803fddfd1c1"
+  integrity sha512-cXGmeiVkqI/uUK+4C6ZZAUTfXzKWDXRmrOqFjzwpiO/VnPUNUvOAbmebCc6AqJIlSfKPG139ayMEV/nOuCwCHw==
+  dependencies:
+    source-map-support "^0.5.19"
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
