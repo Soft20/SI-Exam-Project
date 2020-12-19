@@ -5,10 +5,6 @@ from db_connect import database, mongo_client
 products = database["products"]
 warehouses = database["warehouses"]
 
-'''
-slet product skal også ske i warehouse
-'''
-
 
 def get_all_products():
     products_list = products.find()

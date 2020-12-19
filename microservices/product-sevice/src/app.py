@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 
 # components
-# import eureka
+import eureka
 from product import get_product, update_product, add_product, delete_product, get_all_products, get_products_in_warehouse, get_product_from_warehouse
 from warehouse import get_warehouse, update_warehouse, add_warehouse, delete_warehouse, get_all_warehouses
 from order import get_order, update_order, place_order, delete_order, get_all_orders
@@ -14,7 +14,7 @@ load_dotenv(verbose=True)
 app = Flask(__name__)
 PORT = os.getenv("PORT")
 
-# eureka.start()
+eureka.start()
 
 
 @app.route('/')
