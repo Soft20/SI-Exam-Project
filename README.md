@@ -12,7 +12,8 @@ In addition to the document, the team prepares a 10-minute video, presenting the
 
 ## Use Case & Considerations
 
-Approaching this project, we started by brainstorming different ideas, as to how we could incorporate all elements we've learned throughout the semester. This led us to a webshop-like architecture, utilizing different programming languages (Java, Python, JavaScript & TypeScript) and systems. This includes web scraping (Selenium) for delivery rates, database management (MongoDB), order management (Camunda), messaging (RabbitMQ) and currency conversion ([External Central Bank API](http://exchangeratesapi.io/)).
+Approaching this project, we started by brainstorming different ideas, as to how we could incorporate all elements we've learned throughout the semester. This led us to a webshop-like architecture, utilizing different programming languages (Java, Python, JavaScript & TypeScript) and systems. This includes web scraping (Selenium) for delivery rates, database management (MongoDB), order management (Camunda), messaging (RabbitMQ) and currency conversion ([External Central Bank API](http://exchangeratesapi.io/)). 
+ 
 
 ## Integration
 
@@ -53,6 +54,7 @@ In the development process we have used pair programming together with the vscod
 
 Below is a short description of how to install and start each system element.
 
+##
 #### Eureka
 
 Navigate to [./eureka](eureka).
@@ -61,6 +63,7 @@ Navigate to [./eureka](eureka).
 java -jar eureka.jar
 ```
 
+##
 #### Product Service
 
 Navigate to [./microservices/product-service](microservices/product-service).
@@ -72,6 +75,7 @@ pip install -r requirements.txt
 python src/app.py
 ```
 
+##
 #### Shipping Service
 
 Navigate to [./microservices/shipping-service](microservices/shipping-service).
@@ -81,6 +85,7 @@ Navigate to [./microservices/shipping-service](microservices/shipping-service).
 npm install && npm start
 ```
 
+##
 #### Mail Service
 
 Start your **RabbitMQ** server.
@@ -97,6 +102,7 @@ Navigate to [./mail-service](mail-service).
 npm install && npm start
 ```
 
+##
 #### Camunda
 
 Start your **Camunda** server.
@@ -109,6 +115,7 @@ Open the Camunda tasklist and login with the credentials:
 
 Deploy [./microservices/order-approval/bpmn/order-approval.bpmn](microservices/order-approval/bpmn/order-approval.bpmn)
 
+##
 #### Gateway
 
 Navigate to [./gateway](gateway).
@@ -118,13 +125,16 @@ Navigate to [./gateway](gateway).
 npm install && npm start
 ```
 
+##
 #### Eureka Application Connections
 
 Go to http://localhost:8761/
 
 4 applications should be connected as shown on the image below:
+
 ![eureka](assets/eureka.png)
 
+##
 ### Using the API
 
 | Entity             | Method     | Url                                             |
@@ -136,6 +146,7 @@ Go to http://localhost:8761/
 | **Order**          |  GET, POST | http://localhost:4000/order?id=ORDER_ID         |
 | **All Orders**     |  GET       | http://localhost:4000/order/all                 |
 
+##
 ### Using the Mail Service
 
 **Language:** JavaScript
