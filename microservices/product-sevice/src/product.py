@@ -33,7 +33,7 @@ def get_product(id):
         product['_id'] = str(product['_id'])
         return jsonify({'warehouses': inventory, **product}), 200
     except:
-        return 'Product not found', 404
+        return {'message': 'Product not found'}, 404
 
 
 def get_product_from_warehouse(product_id, warehouse_id):
@@ -47,7 +47,7 @@ def get_product_from_warehouse(product_id, warehouse_id):
 
         return jsonify({'amount': amount, **product}), 200
     else:
-        return jsonify('The desired product was not found'), 404
+        return jsonify({'message': 'The desired product was not found'}), 404
 
 
 def get_products_in_warehouse(warehouse_id):
@@ -63,7 +63,7 @@ def get_products_in_warehouse(warehouse_id):
 
         return jsonify(product_items), 200
     except:
-        return 'Products from warehouse not found', 404
+        return {'message': 'Products from warehouse not found'}, 404
 
 
 def update_product(id):
@@ -79,13 +79,13 @@ def update_product(id):
         product['weight'] = request.json['weight']
 
     if len(product.keys()) == 0:
-        return 'Invalid arguments', 400
+        return {'message': 'Invalid arguments'}, 400
 
     try:
         products.update_one({"_id": ObjectId(id)}, {"$set": product})
         return jsonify({'message': 'product updated successfully'}), 200
     except:
-        return 'Product not found', 404
+        return {'message': 'Product not found'}, 404
 
 
 def delete_product(id):
@@ -99,7 +99,7 @@ def delete_product(id):
 
         return jsonify({'message': 'product deleted successfully'}), 200
     except:
-        return 'Product not found', 404
+        return {'message': 'Product not found'}, 404
 
 
 def add_product():
@@ -109,12 +109,12 @@ def add_product():
         price = request.json['price']
         weight = request.json['weight']
     except:
-        return 'name, price, weight and warehouse_ids fields are required', 400
+        return {'message': 'name, price, weight and warehouse_ids fields are required'}, 400
 
     try:
         warehouses.find({"_id": {"$in": [ObjectId(inventory['id']) for inventory in warehouse_inventory]}})
     except:
-        return 'Warehouse not found', 404
+        return {'message': 'Warehouse not found'}, 404
 
     try:
         product = products.insert_one({'name': name, 'price': price, 'weight': weight})
@@ -122,6 +122,6 @@ def add_product():
         for inventory in warehouse_inventory:
             warehouses.update({"_id": ObjectId(inventory['id'])}, {'$push': {'products': {'id': product.inserted_id, 'amount': inventory['amount']}}})
 
-        return f'Product created successfully with id: {product.inserted_id}', 201
+        return {'message': f'Product created successfully with id: {product.inserted_id}'}, 201
     except:
-        return 'Product not created', 400
+        return {'message': 'Product not created'}, 400

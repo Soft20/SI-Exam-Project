@@ -26,7 +26,7 @@ def get_order(id):
 
         return jsonify(order), 200
     except:
-        return 'Order not found', 404
+        return {'message': 'Order not found'}, 404
 
 
 def update_order(id):
@@ -34,7 +34,7 @@ def update_order(id):
         orders.update_one({"_id": ObjectId(id)}, {"$set": {'confirmed': True}})
         return jsonify({'message': 'order updated successfully'}), 200
     except:
-        return 'Order not found', 404
+        return {'message': 'Order not found'}, 404
 
 
 def delete_order(id):
@@ -42,9 +42,9 @@ def delete_order(id):
     try:
         order = orders.find_one({'_id': ObjectId(id)})
         if not order:
-            return 'Order not found', 404
+            return {'message': 'Order not found'}, 404
     except:
-        return 'Order not found', 404
+        return {'message': 'Order not found'}, 404
 
     warehouse_id = order['warehouse_id']
     amount = order['amount']
@@ -54,18 +54,18 @@ def delete_order(id):
     result = [product for product in warehouse['products'] if product['id'] == ObjectId(product_id)]
 
     if len(result) < 1:
-        return 'Product not found', 404
+        return {'message': 'Product not found'}, 404
 
     try:
         warehouses.update_one({'_id': ObjectId(warehouse_id), "products.id": ObjectId(product_id)}, {'$set': {"products.$.amount":  result[0]['amount'] + amount}})
     except:
-        return 'Warehouse not updated', 404
+        return {'message': 'Warehouse not updated'}, 404
 
     try:
         orders.delete_one({"_id": ObjectId(id)})
         return jsonify({'message': 'order deleted successfully'}), 200
     except:
-        return 'Order not found', 404
+        return {'message': 'Order not found'}, 404
 
 
 def place_order():
@@ -76,12 +76,12 @@ def place_order():
         amount = request.json['amount']
         shipping_price = request.json['shipping_price']
     except:
-        return 'email, product, amount and shipping price fields are required', 400
+        return {'message': 'email, product, amount and shipping price fields are required'}, 400
 
     try:
         product = products.find_one({"_id": ObjectId(product_id)}, {'name': 0})
         if not product:
-            return 'Product not found', 404
+            return {'message': 'Product not found'}, 404
 
         warehouse_list = warehouses.find()
 
@@ -96,13 +96,13 @@ def place_order():
                     warehouses.update_one({'_id': selected_warehouse, "products.id": ObjectId(product_id)}, {'$set': {"products.$.amount":  result[0]['amount'] - amount}})
                     break
                 except:
-                    return 'Product inventory not updated', 400
+                    return {'message': 'Product inventory not updated'}, 400
 
         if not selected_warehouse:
-            return 'Product not available', 400
+            return {'message': 'Product not available'}, 400
 
     except:
-        return 'Product not found', 404
+        return {'message': 'Product not found'}, 404
 
     total_price = amount * product['price']
     total_weight = amount * product['weight']
@@ -114,6 +114,6 @@ def place_order():
         place_order = orders.insert_one(order)
         order['_id'] = str(place_order.inserted_id)
     except:
-        return 'Order not created', 400
+        return {'message': 'Order not created'}, 400
 
     return jsonify(order), 201

@@ -1,8 +1,8 @@
 const express = require('express');
 const fetch = require('node-fetch');
-const EurekaClient = require('./eureka')
+const EurekaClient = require('./eureka');
 require('./camunda');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -15,13 +15,14 @@ const app = express();
 app.use(express.json());
 
 app.post('/purchase', async (req, res) => {
-	const { orderId, price, mail } = req.body;
+	const { orderId, price, email, shippingPrice } = req.body;
 
 	const body = {
 		variables: {
 			orderId: { value: orderId, type: 'string' },
-			customer: { value: mail, type: 'string' },
+			customer: { value: email, type: 'string' },
 			price: { value: price, type: 'long' },
+			shippingPrice: { value: shippingPrice, type: 'long' },
 		},
 	};
 

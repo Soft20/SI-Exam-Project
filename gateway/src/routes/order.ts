@@ -1,94 +1,143 @@
 import { Router } from 'restify-router';
-import { serviceURL } from '../eureka'
+import { serviceURL } from '../eureka';
 import fetch, { Response } from 'node-fetch';
-import handleError from "../utils/handleError"
-import hypermedia from "../utils/hypermedia"
+import handleError from '../utils/handleError';
+import hypermedia from '../utils/hypermedia';
+
+import ServiceError from '../errors/ServiceError';
 
 const router = new Router();
 
-const ORDER_APPROVAL_SERVER_ID: string = 'order-approval'
-const SHIPPING_SERVICE_SERVER_ID: string = 'shipping-service'
+const ORDER_APPROVAL: string = 'order-approval';
+const PRODUCT_SERVICE: string = 'product-service';
+const SHIPPING_SERVICE: string = 'shipping-service';
 
-router.get({ name: "getOrder", path: '/:id' }, async (req, res) => {
-    try {
+const CURRENCY_URL = 'https://api.exchangeratesapi.io';
+const BASE_CURRENCY = 'DKK';
 
-    } catch (e) {
-        handleError(e, res)
-    }
-})
+router.get({ name: 'getOrder', path: '' }, async (req, res) => {
+	const id: string = req.query?.id;
 
-router.post({ name: 'createOrder', path: '' }, async (req, res) => {
-    try {
-        const { product_id, amount, email } = req.body
-        console.log("product_id", product_id)
-        console.log("amount", amount)
-        console.log("email", email)
+	try {
+		const PRODUCT_SERVICE_URL = await serviceURL(PRODUCT_SERVICE);
+		const orderResponse = await fetch(`${PRODUCT_SERVICE_URL}/order?id=${id}`);
+		const order = await orderResponse.json();
 
-        // TODO get item weight
-        const weight: number = amount * 42 //the meaning of life
+		if (orderResponse.ok) {
+			const response = {
+				self: hypermedia('getOrder', {}, { id: order._id }),
+				product: hypermedia('getProduct', {}, { id: order.product_id }),
+				warehouse: hypermedia('getWarehouse', {}, { id: order.warehouse_id }),
+				amount: order.amount,
+				confirmed: order.confirmed,
+				email: order.email,
+				price: order.price,
+				shippingPrice: order.shipping_price,
+				weight: order.weight,
+			};
 
-        // shipping calc
-        let URL: string = await serviceURL(SHIPPING_SERVICE_SERVER_ID)
-
-        let response: Response = await fetch(`${URL}?weights=${weight}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        })
-        let shippingPrices: string = await response.json()
-        let shippingWeight: number = weight >= 50 ? weight : 50
-
-        let shippingPrice: number = shippingPrices[String(shippingWeight)];
-
-        console.log(`The order will have a shipping price of ${shippingPrice}`);
-
-        // TODO make order with product ids, shipping_price and amount?
-        const order: any = {
-            _id: "5fddd0bdcbd05f2e463b552d",
-            amount: 1,
-            confirmed: false,
-            email: "dora@mail.com",
-            price: 84,
-            shipping_price: shippingPrice,
-            product_id: "5fd4f2a8b6375cb8482e6ad0",
-            weight: 150
-        }
-
-        // Send order to approval through the Camunda order-approval service.
-        URL = await serviceURL(ORDER_APPROVAL_SERVER_ID)
-
-        const totalPrice: number = order.price + order.shipping_price
-
-        const body: any = {
-            orderId: order._id,
-            price: totalPrice,
-            mail: order.email,
-        }
-
-        response = await fetch(`${URL}/purchase`, {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: { 'Content-Type': 'application/json' }
-        })
-        console.log(`Camunda responded with ${response.status}`);
-
-        const result: any = {
-            ...order,
-            link: hypermedia("getOrder", { "id": order._id })
-        }
-
-        res.send(result)
-    } catch (e) {
-        handleError(e, res)
-    }
-
+			res.send(response);
+		} else {
+			throw new ServiceError(order.message, orderResponse.status);
+		}
+	} catch (e) {
+		handleError(e, res);
+	}
 });
 
-router.del({ name: "delete order", path: '' }, async (req, res) => {
-    try {
+router.post({ name: 'createOrder', path: '' }, async (req, res) => {
+	try {
+		const { product_id, amount, email } = req.body;
+		const { currency } = req.query;
+		res.setHeader('conversionCurrency', currency);
+		res.setHeader('baseCurrency', BASE_CURRENCY);
 
-    } catch (e) {
-        handleError(e, res)
-    }
-})
+		// ---------------PRODUCT SERVICE (GET PRODUCT WEIGHT & PRICE)-----------------------
+		const PRODUCT_SERVICE_URL = await serviceURL(PRODUCT_SERVICE);
+		let productResponse = await fetch(`${PRODUCT_SERVICE_URL}/product?id=${product_id}`);
+		let product = await productResponse.json();
+
+		let { weight, price } = product;
+		const total_weight: number = amount * weight;
+
+		// ---------------SHIPPING SERVICE-----------------------
+		const SHIPPING_SERVICE_URL: string = await serviceURL(SHIPPING_SERVICE);
+		let response: Response = await fetch(`${SHIPPING_SERVICE_URL}?weights=${total_weight}`);
+
+		let shippingPrices: string = await response.json();
+		let shippingWeight: number = total_weight >= 50 ? total_weight : 50;
+		let shippingPrice: number = shippingPrices[String(shippingWeight)];
+
+		const totalPrice: number = amount * price + shippingPrice;
+		console.log(`The order will have a shipping price of ${shippingPrice}`);
+
+		// ---------------PRODUCT SERVICE (PLACE ORDER)-----------------------
+		const orderBody: any = { email, product_id, amount, shipping_price: shippingPrice };
+
+		const orderResponse = await fetch(`${PRODUCT_SERVICE_URL}/order`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(orderBody),
+		});
+
+		const order = await orderResponse.json();
+
+		// ---------------ORDER APPROVAL SERVICE-----------------------
+		const ORDER_APPROVAL_URL = await serviceURL(ORDER_APPROVAL);
+
+		await fetch(`${ORDER_APPROVAL_URL}/purchase`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ orderId: order._id, email, price: totalPrice, shippingPrice }),
+		});
+
+		// ---------------OPTIONAL CURRENCY CONVERSION-----------------------
+		const convertedTotalPrice = await convertCurrency(totalPrice, BASE_CURRENCY, currency);
+
+		// ---------------RESULT-----------------------
+		const result: any = {
+			...order,
+			totalPrice,
+			convertedTotalPrice,
+			baseCurrency: BASE_CURRENCY,
+			conversionCurrency: currency,
+			link: hypermedia('getOrder', {}, { id: order._id }),
+		};
+
+		res.send(result);
+	} catch (e) {
+		handleError(e, res);
+	}
+});
+
+router.del({ name: 'deleteOrder', path: '' }, async (req, res) => {
+	const id: string = req.query?.id;
+
+	try {
+		const PRODUCT_SERVICE_URL = await serviceURL(PRODUCT_SERVICE);
+		const orderResponse = await fetch(`${PRODUCT_SERVICE_URL}/order?id=${id}`, { method: 'DELETE' });
+		const response = await orderResponse.json();
+
+		if (orderResponse.ok) {
+			res.send(response);
+		} else {
+			throw new ServiceError(response.message, orderResponse.status);
+		}
+	} catch (e) {
+		handleError(e, res);
+	}
+});
+
+async function convertCurrency(amount, from, to): Promise<number> {
+	if (!to || from === to) return amount;
+
+	const currencyResponse = await fetch(`${CURRENCY_URL}/latest?base=${from}`);
+
+	const currencyRates = await currencyResponse.json();
+
+	const rate = currencyRates.rates[to];
+
+	return rate * amount;
+}
 
 export default router;

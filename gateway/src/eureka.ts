@@ -31,9 +31,9 @@ client.start();
 
 export default client;
 
-export async function serviceURL(serverId:string) : Promise<string> {
-	const expressServer = await client.getInstancesByAppId(serverId)[0];
+export async function serviceURL(serverId: string): Promise<string> {
+	const expressServer: any = await client.getInstancesByAppId(serverId)[0];
 	const EXPRESS_SERVICE_HOST = expressServer.hostName;
 	const EXPRESS_SERVICE_PORT = expressServer.port['$'];
-	return `http://${EXPRESS_SERVICE_HOST}:${EXPRESS_SERVICE_PORT}`
+	return `http://${EXPRESS_SERVICE_HOST}:${EXPRESS_SERVICE_PORT}`;
 }

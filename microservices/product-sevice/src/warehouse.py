@@ -10,7 +10,7 @@ def delete_warehouse(id):
         warehouses.delete_one({"_id": ObjectId(id)})
         return jsonify({'message': 'warehouse deleted successfully'}), 200
     except:
-        return 'Warehouse not found', 404
+        return {'message': 'Warehouse not found'}, 404
 
 
 def update_warehouse(id):
@@ -26,13 +26,13 @@ def update_warehouse(id):
         warehouse['remote'] = request.json['remote']
 
     if len(warehouse.keys()) == 0:
-        return 'Invalid arguments', 400
+        return {'message': 'Invalid arguments'}, 400
 
     try:
         warehouses.update_one({"_id": ObjectId(id)}, {"$set": warehouse})
         return jsonify({'message': 'warehouse updated successfully'}), 200
     except:
-        return 'Warehouse not found', 404
+        return {'message': 'Warehouse not found'}, 404
 
 
 def get_warehouse(id):
@@ -45,7 +45,7 @@ def get_warehouse(id):
 
         return jsonify(warehouse), 200
     except:
-        return 'Warehouse not found', 404
+        return {'message': 'Warehouse not found'}, 404
 
 
 def add_warehouse():
@@ -54,13 +54,13 @@ def add_warehouse():
         location = request.json['location']
         remote = request.json['remote']
     except:
-        return 'name, location and remote fields are required', 400
+        return {'message': 'name, location and remote fields are required'}, 400
 
     try:
         warehouse = warehouses.insert_one({'name': name, 'location': location, 'remote': remote, 'products': []})
-        return f'Warehouse created successfully with id: {warehouse.inserted_id}', 201
+        return {'message': f'Warehouse created successfully with id: {warehouse.inserted_id}'}, 201
     except:
-        return 'Warehouse not found', 404
+        return {'message': 'Warehouse not found'}, 404
 
 
 def get_all_warehouses():
@@ -76,4 +76,4 @@ def get_all_warehouses():
         return jsonify(warehouse_items), 200
 
     except:
-        return 'Warehouses not found', 404
+        return {'message': 'Warehouses not found'}, 404
