@@ -9,6 +9,8 @@
 	"dependencies": {
 		"amqplib": "^0.6.0",
 		"camunda-external-task-client-js": "^2.0.0",
+		"dotenv": "^8.2.0",
+		"eureka-js-client": "^4.5.0",
 		"express": "^4.17.1",
 		"node-fetch": "^2.6.1"
 	},

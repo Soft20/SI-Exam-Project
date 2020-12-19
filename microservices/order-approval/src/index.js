@@ -1,5 +1,6 @@
 const express = require('express');
 const fetch = require('node-fetch');
+const EurekaClient = require('./eureka')
 require('./camunda');
 
 const PORT = 3000;
@@ -34,4 +35,13 @@ app.post('/purchase', async (req, res) => {
 	res.json({ message: `Order ${orderId} received and is being processed.` });
 });
 
-app.listen(PORT, () => console.log(`BPMN Service running at http://localhost:${PORT}`));
+app.listen(PORT, async () => {
+	try {
+		await EurekaClient.start();
+	} catch (error) {
+		console.log(error.message);
+		process.exit();
+	}
+});
+
+// app.listen(PORT, () => console.log(`BPMN Service running at http://localhost:${PORT}`));
