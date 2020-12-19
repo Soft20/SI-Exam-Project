@@ -58,7 +58,7 @@ In the process of placing an order, Camunda filter withhold orders with a price 
 
 ### Gateway
 
-Through the gateway we're making the system restful through API endpoints, utilizing CRUD operations in a streamlined fashion. This is done through the routes `/order`, `/product` & `/warehouse`, in which the other microservices, exposed through Eureka, is utilized for the webshop processes. Additionally we use hyperlinks in the API response content to make avigation between endpoints ynnmica nd cconvenient.
+Through the gateway we're making the system restful through API endpoints, utilizing CRUD operations in a streamlined fashion. This is done through the routes `/order`, `/product` & `/warehouse`, in which the other microservices, exposed through Eureka, is utilized for the webshop processes. Additionally we use hyperlinks in the API response content to make avigation between endpoints dynamic and convenient.
 
 ### Logging
 
