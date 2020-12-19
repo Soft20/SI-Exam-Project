@@ -1,5 +1,3 @@
-// import * as dotenv from 'dotenv';
-// import { Eureka } from 'eureka-js-client';
 const dotenv = require('dotenv')
 const { Eureka } = require('eureka-js-client')
 const EnvError = require('./errors/EnvError');
