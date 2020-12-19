@@ -1,0 +1,18 @@
+{
+	"name": "mail-service",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"dependencies": {
+		"amqplib": "^0.6.0"
+	},
+	"scripts": {
+		"start": "node src/index.js",
+		"adam": "node src/index.js adam@mail.com",
+		"pernille": "node src/index.js pernille@mail.com",
+		"rasmus": "node src/index.js rasmus@mail.com",
+		"stephan": "node src/index.js stephan@mail.com",
+		"dora": "node src/index.js dora@mail.com",
+		"censor": "node src/index.js censor@mail.com"
+	}
+}
