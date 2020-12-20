@@ -9,14 +9,6 @@ Adam Lass
 Stephan Djurhuus  
 Rasmus Helsgaun  
 
-## Business Case
-
-There is no requirement for writing report. Instead the team is expected to add project description in a .md file in the GitHub repository, where the integration development process and considerations
-are explained and visualized by diagrams.
-Including an architectural diagram of the whole system and its components is a must.
-
-In addition to the document, the team prepares a 10-minute video, presenting the project, where the business cases, problems and solutions can be further discussed, demonstrated, and evaluated.
-
 ## Use Case & Considerations
 
 Approaching this project, we started by brainstorming different ideas, as to how we could incorporate all elements we've learned throughout the semester. This led us to a webshop-like architecture, utilizing different programming languages (Java, Python, JavaScript & TypeScript) and systems. This includes web scraping (Selenium) for delivery rates, database management (MongoDB), order management (Camunda), messaging (RabbitMQ) and currency conversion ([External Central Bank API](http://exchangeratesapi.io/)).
