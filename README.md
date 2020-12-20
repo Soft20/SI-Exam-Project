@@ -10,7 +10,7 @@ Stephan Djurhuus
 Rasmus Helsgaun  
 
 ### Link to presentation  
-[Presentation](https://youtu.be/L38G65NDEkE)
+[Video Presentation](https://youtu.be/L38G65NDEkE)
 
 ## Business Case & Considerations
 
