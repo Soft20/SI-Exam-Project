@@ -4,10 +4,10 @@ _System Integration, Fall 2020_
 
 #### Group Members
 
-Pernille Lørup
-Adam Lass
-Stephan Djurhuus
-Rasmus Helsgaun
+Pernille Lørup  
+Adam Lass  
+Stephan Djurhuus  
+Rasmus Helsgaun  
 
 ## Business Case
 
